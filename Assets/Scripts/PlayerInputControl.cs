@@ -9,9 +9,9 @@ public class PlayerInputControl : MonoBehaviour
     [Header("Input Map")]
     //  [SerializeField] private string actionMapName = "Player";
     [Header("Actions")]
-    [SerializeField] private string move = "Move";
-    [SerializeField] private string run = "Run";
-    [SerializeField] private string jump = "Jump";
+    //[SerializeField] private string move = "Move";
+    //[SerializeField] private string run = "Run";
+    //[SerializeField] private string jump = "Jump";
 
     private readonly InputAction moveAction;
     private readonly InputAction runAction;
