@@ -11,6 +11,18 @@ public class PlayerMovementSideViewCC : MonoBehaviour
     [SerializeField] private float walkSpeed;
     [SerializeField] private float runSpeed;
     [SerializeField] private float runSpeedMultiplier;
+
+    [Header("Jumping")]
+    [SerializeField] private bool jump;
+    [SerializeField] private float jumpSpeed;
+    [SerializeField] private float jumpTime;
+    [SerializeField] private float jumpMaxTime;
+    [SerializeField] private bool isOnGround;
+
+    [Header("Gravity")]
+    [SerializeField] private float gravity;
+    [SerializeField] private bool isFalling;
+
     private Vector2 currentMovement;
 
     private PlayerControls input = null;
@@ -28,22 +40,35 @@ public class PlayerMovementSideViewCC : MonoBehaviour
         input.Enable();
         input.Player.Move.performed += OnMovementPerformed;
         input.Player.Move.canceled += OnMovementCancelled;
+        input.Player.Jump.performed += OnJumpPerformed;
+        input.Player.Jump.canceled += OnJumpCancelled;
     }
+
     private void OnDisable()
     {
         input.Disable();
         input.Player.Move.performed -= OnMovementPerformed;
         input.Player.Move.canceled -= OnMovementCancelled;
+        input.Player.Jump.performed -= OnJumpPerformed;
+        input.Player.Jump.canceled -= OnJumpCancelled;
     }
 
     private void OnMovementPerformed(InputAction.CallbackContext context)
     {
         moveVector = context.ReadValue<Vector2>();
-
     }
     private void OnMovementCancelled(InputAction.CallbackContext context)
     {
         moveVector = Vector2.zero;
+    }
+
+    private void OnJumpPerformed(InputAction.CallbackContext context)
+    {
+        jump = true;
+    }
+    private void OnJumpCancelled(InputAction.CallbackContext context)
+    {
+        jump = false;
     }
 
     public void Move()
@@ -53,25 +78,47 @@ public class PlayerMovementSideViewCC : MonoBehaviour
             Vector2 horizontalMovement = new(moveVector.x, moveVector.y);
 
             currentMovement.x = horizontalMovement.x * walkSpeed;
-            currentMovement.y = horizontalMovement.y * walkSpeed;
             characterController.Move(currentMovement * Time.deltaTime);
 
             // Flip the player's sprite based on direction of movement
             if (currentMovement.x > 0)
             {
-                transform.localScale = new(-1, 1, 1); // Face right
+                transform.localScale = new(-1, 1, 1); // Face left
             }
             else if (currentMovement.x < 0)
             {
-                transform.localScale = new(1, 1, 1); // Face left
+                transform.localScale = new(1, 1, 1); // Face right
             }
         }
     }
+    private void Jump()
+    {
+        if (characterController != null && jump && jumpTime < jumpMaxTime )
+        {
+            currentMovement.y += jumpSpeed * Time.deltaTime;
+            jumpTime += 1.0f * Time.deltaTime;
 
+        }
+        if(jumpTime >= jumpMaxTime)
+        {
+            //jump = false; // Reset the jump flag
+            isFalling = true;   
+        }
+    }
+
+    private void GravityControl()
+    {
+        if (isFalling)
+        {
+            currentMovement.y -= gravity  * Time.deltaTime;
+        }
+    }
 
     private void Update()
     {
         Move();
+        Jump();
+        GravityControl();
     }
 
 
