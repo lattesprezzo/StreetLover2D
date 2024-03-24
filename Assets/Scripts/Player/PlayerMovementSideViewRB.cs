@@ -36,16 +36,16 @@ public class PlayerMovementSideViewRB : MonoBehaviour
     [Header("Shooting")]
     public GameObject loveBullet; // The bullet prefab
     public float bulletSpeed = 10f; // The speed of the bullet
-    public bool CanShoot = true; // Whether the player can shoot
+    public bool Shooting; // Whether the player can shoot
     private int direction = 1; // 1 for right, -1 for left
     public Transform bulletSpawnLocation;
-    private float bulletLifeTime;
+    public float bulletLifeTime;
 
     private void Awake()
     {
         input = new PlayerControls();
         rb = GetComponent<Rigidbody2D>();
-        loveBullet = Instantiate(loveBullet, bulletSpawnLocation.position, Quaternion.identity);
+      //  loveBullet = Instantiate(loveBullet, bulletSpawnLocation.position, Quaternion.identity);
     }
     private void OnEnable()
     {
@@ -67,7 +67,7 @@ public class PlayerMovementSideViewRB : MonoBehaviour
         input.Player.Jump.canceled -= OnJumpCancelled;
         input.Player.Shoot.performed -= OnShootPerformed;
         input.Player.Shoot.canceled -= OnShootCancelled;
-
+        Debug.Log(Time.deltaTime);
     }
 
     private void OnMovementPerformed(InputAction.CallbackContext context)
@@ -89,11 +89,11 @@ public class PlayerMovementSideViewRB : MonoBehaviour
     }
     private void OnShootPerformed(InputAction.CallbackContext context)
     {
-        CanShoot = true;
+        Shooting = true;
     }
     private void OnShootCancelled(InputAction.CallbackContext context)
     {
-        CanShoot = false;
+        Shooting = false;
     }
 
     public void Move()
@@ -105,6 +105,7 @@ public class PlayerMovementSideViewRB : MonoBehaviour
             {
                 transform.localScale = new Vector3(-1, 1, 1); // Face right
                 direction = 1;
+  
             }
             else if (rb.velocity.x < 0)
             {
@@ -118,18 +119,20 @@ public class PlayerMovementSideViewRB : MonoBehaviour
     {
         if (rb != null && jump && isOnGround && jumpTime == 0)
         {
-            rb.AddForce(new(0, jumpForce), ForceMode2D.Impulse);
+            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
         jumpTime += jumpTimeMultiplier * Time.deltaTime;
+
         if (jumpTime == jumpMaxTime / 2 || isOnGround)
         {
             jumpTime = 0;
         }
+ 
 
     }
     public void Shoot()
     {
-        if (CanShoot)
+        if (Shooting)
         {
             // Create a new bullet at the player's position
             GameObject bullet = Instantiate(loveBullet, bulletSpawnLocation.position, Quaternion.identity);
@@ -142,10 +145,11 @@ public class PlayerMovementSideViewRB : MonoBehaviour
 
             // Remember to destroy or hide the prefab!
             bulletLifeTime -= Time.deltaTime;
+
             if(bulletLifeTime <= 0)
             {
                 // This destroys the bullet from memory (Heavy for performance)
-               // DestroyGameObject(bullet);
+               Destroy(bullet); 
 
                 // This hides the 
             }
@@ -157,10 +161,19 @@ public class PlayerMovementSideViewRB : MonoBehaviour
     {
         Move();
         Jump();
+        Shoot(); 
+       
 
-       currentMovement = new(moveVector.x * walkSpeed, rb.velocity.y);
+
+        //1. keino liikuttaa hahmoa: Liikutetaan Rigidbodya. y-akseli ei ota input-arvoa tässä
+        // vaan sen hoitaa Jump()-funktio erikseen. "rb.velocity.y" vain päivittää y-arvoa liikkumisen mukana.
+        currentMovement = new(moveVector.x * walkSpeed, rb.velocity.y);
         // Apply the force for movement
         rb.velocity = currentMovement;
+
+        // 2.keino liikuttaa hahmoa edestakaisin. Huomaa, että y-akselin hoitaa Jump()-funktio erikseen:
+        // Translate on hieman herkempi ottamaan vastaan arvoja, joten walkSpeed tulisi olla paljon pienempi (0.005f).
+        //transform.Translate(new(moveVector.x * walkSpeed, 0, 0));
 
         // isOnGround = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
         isOnGround = Physics2D.OverlapCapsule(groundCheck.position, new(1f, 2f), CapsuleDirection2D.Horizontal, 0, groundLayer);
