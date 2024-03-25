@@ -15,7 +15,7 @@ public class PlayerMovementSideViewRB : MonoBehaviour
     [SerializeField] private float jumpTime = 0;
     [SerializeField] private float jumpTimeMultiplier;
     [SerializeField] private float jumpMaxTime;
-    [SerializeField] private bool isOnGround;
+ //[SerializeField] private bool IsOnGround;
     [SerializeField] private LayerMask groundLayer; // Set this to the layer of the ground in the inspector
     [SerializeField] private Transform groundCheck; // Set this to a point where the ground check should be performed
     [SerializeField] private float groundCheckRadius; // The radius of the ground check
@@ -45,7 +45,7 @@ public class PlayerMovementSideViewRB : MonoBehaviour
     {
         input = new PlayerControls();
         rb = GetComponent<Rigidbody2D>();
-      //  loveBullet = Instantiate(loveBullet, bulletSpawnLocation.position, Quaternion.identity);
+        //  loveBullet = Instantiate(loveBullet, bulletSpawnLocation.position, Quaternion.identity);
     }
     private void OnEnable()
     {
@@ -105,7 +105,7 @@ public class PlayerMovementSideViewRB : MonoBehaviour
             {
                 transform.localScale = new Vector3(-1, 1, 1); // Face right
                 direction = 1;
-  
+
             }
             else if (rb.velocity.x < 0)
             {
@@ -114,20 +114,25 @@ public class PlayerMovementSideViewRB : MonoBehaviour
             }
         }
     }
+    bool IsOnGround()
+    {
+        // isOnGround = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+        return Physics2D.OverlapCapsule(groundCheck.position, new(1f, 2f), CapsuleDirection2D.Horizontal, 0, groundLayer);
+    }
 
     private void Jump()
     {
-        if (rb != null && jump && isOnGround && jumpTime == 0)
+        if (rb != null && jump && IsOnGround() && jumpTime == 0)
         {
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
         jumpTime += jumpTimeMultiplier * Time.deltaTime;
 
-        if (jumpTime == jumpMaxTime / 2 || isOnGround)
+        if (jumpTime == jumpMaxTime / 2 || IsOnGround())
         {
             jumpTime = 0;
         }
- 
+
 
     }
     public void Shoot()
@@ -146,24 +151,21 @@ public class PlayerMovementSideViewRB : MonoBehaviour
             // Remember to destroy or hide the prefab!
             bulletLifeTime -= Time.deltaTime;
 
-            if(bulletLifeTime <= 0)
+            if (bulletLifeTime <= 0)
             {
                 // This destroys the bullet from memory (Heavy for performance)
-               Destroy(bullet); 
+                Destroy(bullet);
 
                 // This hides the 
             }
         }
     }
 
-
     private void Update()
     {
         Move();
         Jump();
-        Shoot(); 
-       
-
+        Shoot();
 
         //1. keino liikuttaa hahmoa: Liikutetaan Rigidbodya. y-akseli ei ota input-arvoa tässä
         // vaan sen hoitaa Jump()-funktio erikseen. "rb.velocity.y" vain päivittää y-arvoa liikkumisen mukana.
@@ -175,7 +177,6 @@ public class PlayerMovementSideViewRB : MonoBehaviour
         // Translate on hieman herkempi ottamaan vastaan arvoja, joten walkSpeed tulisi olla paljon pienempi (0.005f).
         //transform.Translate(new(moveVector.x * walkSpeed, 0, 0));
 
-        // isOnGround = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
-        isOnGround = Physics2D.OverlapCapsule(groundCheck.position, new(1f, 2f), CapsuleDirection2D.Horizontal, 0, groundLayer);
+
     }
 }

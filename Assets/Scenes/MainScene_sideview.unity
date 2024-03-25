@@ -137,13 +137,14 @@ GameObject:
   - component: {fileID: 26395605}
   - component: {fileID: 26395604}
   - component: {fileID: 26395606}
+  - component: {fileID: 26395607}
   m_Layer: 0
-  m_Name: Player_RB
+  m_Name: Enemy_RB
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &26395599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -364,6 +365,19 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 3, y: 3.67}
   m_Direction: 0
+--- !u!114 &26395607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 26395598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d8371610809984d9a7a1fdb46668e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PublicEnergy: 1000
 --- !u!1 &166033743
 GameObject:
   m_ObjectHideFlags: 0
@@ -1411,7 +1425,7 @@ MonoBehaviour:
   runSpeed: 0
   runSpeedMultiplier: 0
   jump: 0
-  jumpForce: 1
+  jumpForce: 3.5
   jumpTime: 0
   jumpTimeMultiplier: 27
   jumpMaxTime: 1
