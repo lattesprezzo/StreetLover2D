@@ -144,7 +144,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &26395599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -286,7 +286,6 @@ MonoBehaviour:
   jumpTime: 0
   jumpTimeMultiplier: 0
   jumpMaxTime: 0
-  isOnGround: 0
   groundLayer:
     serializedVersion: 2
     m_Bits: 0
@@ -485,7 +484,6 @@ MonoBehaviour:
   jumpTime: 0
   jumpTimeMultiplier: 0
   jumpMaxTime: 0
-  isOnGround: 0
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -1217,6 +1215,7 @@ GameObject:
   - component: {fileID: 812074755}
   - component: {fileID: 812074756}
   - component: {fileID: 812074757}
+  - component: {fileID: 812074758}
   m_Layer: 0
   m_Name: Player_RB
   m_TagString: Player
@@ -1362,7 +1361,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 8
+  m_GravityScale: 4
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -1416,7 +1415,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 812074747}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fb22bebf5aab1d34d82f9d235b074986, type: 3}
   m_Name: 
@@ -1429,7 +1428,6 @@ MonoBehaviour:
   jumpTime: 0
   jumpTimeMultiplier: 27
   jumpMaxTime: 1
-  isOnGround: 1
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -1446,6 +1444,30 @@ MonoBehaviour:
   Shooting: 0
   bulletSpawnLocation: {fileID: 480943894}
   bulletLifeTime: 2
+--- !u!114 &812074758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 812074747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb9785bcf666a7a41a2121e42d0d0ec1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 8
+  jumpForce: 17
+  rb: {fileID: 812074755}
+  groundCheck: {fileID: 204839685}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  jumpableObject:
+    serializedVersion: 2
+    m_Bits: 0
+  jumpsound: {fileID: 0}
+  jumpClip: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -67,7 +67,7 @@ public class PlayerMovementSideViewRB : MonoBehaviour
         input.Player.Jump.canceled -= OnJumpCancelled;
         input.Player.Shoot.performed -= OnShootPerformed;
         input.Player.Shoot.canceled -= OnShootCancelled;
-        Debug.Log(Time.deltaTime);
+
     }
 
     private void OnMovementPerformed(InputAction.CallbackContext context)

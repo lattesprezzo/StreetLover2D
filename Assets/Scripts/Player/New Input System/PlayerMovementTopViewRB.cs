@@ -1,11 +1,11 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(Rigidbody2D))]
 /*Jos ei ole vaadittavaa Componenttia asennettu GameObjectiin,
 tällä saat luotua sen automaattisesti*/
 
-public class PlayerMovementTopViewCC : MonoBehaviour
+public class PlayerMovementTopViewRB : MonoBehaviour
 {
     [Header("Movement Speeds")]
     [SerializeField] private float walkSpeed;
@@ -15,12 +15,12 @@ public class PlayerMovementTopViewCC : MonoBehaviour
 
     private PlayerControls input = null;
     private Vector2 moveVector = Vector2.zero;
-    private CharacterController characterController = null;
+    private Rigidbody2D rb = null;
 
     private void Awake()
     {
         input = new PlayerControls();
-        characterController = GetComponent<CharacterController>();
+        rb = GetComponent<Rigidbody2D>();
 
     }
     private void OnEnable()
@@ -48,13 +48,13 @@ public class PlayerMovementTopViewCC : MonoBehaviour
 
     public void Move()
     {
-        if (characterController != null)
+        if (rb != null)
         {
             Vector2 horizontalMovement = new(moveVector.x, moveVector.y);
 
             currentMovement.x = horizontalMovement.x * walkSpeed;
             currentMovement.y = horizontalMovement.y * walkSpeed;
-            characterController.Move(currentMovement * Time.deltaTime);
+            rb.velocity = new(currentMovement.x, currentMovement.y); 
 
 
         }
