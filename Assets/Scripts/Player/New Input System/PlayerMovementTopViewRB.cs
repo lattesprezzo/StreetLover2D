@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D))]
 /*Jos ei ole vaadittavaa Componenttia asennettu GameObjectiin,
-tällä saat luotua sen automaattisesti*/
+tï¿½llï¿½ saat luotua sen automaattisesti*/
 
 public class PlayerMovementTopViewRB : MonoBehaviour
 {
@@ -54,7 +54,7 @@ public class PlayerMovementTopViewRB : MonoBehaviour
 
             currentMovement.x = horizontalMovement.x * walkSpeed;
             currentMovement.y = horizontalMovement.y * walkSpeed;
-            rb.velocity = new(currentMovement.x, currentMovement.y); 
+            rb.linearVelocity = new(currentMovement.x, currentMovement.y); 
 
 
         }

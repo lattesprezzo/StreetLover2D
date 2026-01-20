@@ -68,13 +68,13 @@ public class PlayerMovementSideWay : MonoBehaviour
         if (rb != null)
         {
             // Flip the player's sprite based on direction of movement
-            if (rb.velocity.x > 0)
+            if (rb.linearVelocity.x > 0)
             {
                 transform.localScale = new Vector3(-1, 1, 1); // Face right
                 direction = 1;
 
             }
-            else if (rb.velocity.x < 0)
+            else if (rb.linearVelocity.x < 0)
             {
                 transform.localScale = new Vector3(1, 1, 1); // Face left
                 direction = -1;
@@ -86,7 +86,7 @@ public class PlayerMovementSideWay : MonoBehaviour
             // move left:
 
             leftmove = -moveSpeed;
-            rb.velocity = new(leftmove, rb.velocity.y);  // Huomaa, kuinka paljon smoothimpi liike RB:llä.
+            rb.linearVelocity = new(leftmove, rb.linearVelocity.y);  // Huomaa, kuinka paljon smoothimpi liike RB:llä.
                                                          //  transform.Translate(leftmove * Time.deltaTime, 0, 0); // Tönkömpi liike
 
 
@@ -95,7 +95,7 @@ public class PlayerMovementSideWay : MonoBehaviour
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
             rightmove = moveSpeed;
-            rb.velocity = new(rightmove, 0); // Smoothimpi liike
+            rb.linearVelocity = new(rightmove, 0); // Smoothimpi liike
                                              //  transform.Translate(rightmove * Time.deltaTime, 0, 0); // Tönkömpi liike
         }
     }

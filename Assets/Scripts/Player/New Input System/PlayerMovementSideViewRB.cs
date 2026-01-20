@@ -101,13 +101,13 @@ public class PlayerMovementSideViewRB : MonoBehaviour
         if (rb != null)
         {
             // Flip the player's sprite based on direction of movement
-            if (rb.velocity.x > 0)
+            if (rb.linearVelocity.x > 0)
             {
                 transform.localScale = new Vector3(-1, 1, 1); // Face right
                 direction = 1;
 
             }
-            else if (rb.velocity.x < 0)
+            else if (rb.linearVelocity.x < 0)
             {
                 transform.localScale = new Vector3(1, 1, 1); // Face left
                 direction = -1;
@@ -146,7 +146,7 @@ public class PlayerMovementSideViewRB : MonoBehaviour
             Rigidbody2D rbBullet = bullet.GetComponent<Rigidbody2D>();
 
             // Set the bullet's velocity based on the player's facing direction
-            rbBullet.velocity = new Vector2(bulletSpeed * direction, 0);
+            rbBullet.linearVelocity = new Vector2(bulletSpeed * direction, 0);
 
             // Remember to destroy or hide the prefab!
             bulletLifeTime -= Time.deltaTime;
@@ -167,13 +167,13 @@ public class PlayerMovementSideViewRB : MonoBehaviour
         Jump();
         Shoot();
 
-        //1. keino liikuttaa hahmoa: Liikutetaan Rigidbodya. y-akseli ei ota input-arvoa tässä
-        // vaan sen hoitaa Jump()-funktio erikseen. "rb.velocity.y" vain päivittää y-arvoa liikkumisen mukana.
-        currentMovement = new(moveVector.x * walkSpeed, rb.velocity.y);
+        //1. keino liikuttaa hahmoa: Liikutetaan Rigidbodya. y-akseli ei ota input-arvoa tï¿½ssï¿½
+        // vaan sen hoitaa Jump()-funktio erikseen. "rb.velocity.y" vain pï¿½ivittï¿½ï¿½ y-arvoa liikkumisen mukana.
+        currentMovement = new(moveVector.x * walkSpeed, rb.linearVelocity.y);
         // Apply the force for movement
-        rb.velocity = currentMovement;
+        rb.linearVelocity = currentMovement;
 
-        // 2.keino liikuttaa hahmoa edestakaisin. Huomaa, että y-akselin hoitaa Jump()-funktio erikseen:
+        // 2.keino liikuttaa hahmoa edestakaisin. Huomaa, ettï¿½ y-akselin hoitaa Jump()-funktio erikseen:
         // Translate on hieman herkempi ottamaan vastaan arvoja, joten walkSpeed tulisi olla paljon pienempi (0.005f).
         //transform.Translate(new(moveVector.x * walkSpeed, 0, 0));
 
