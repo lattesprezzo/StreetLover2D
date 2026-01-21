@@ -133,7 +133,6 @@ GameObject:
   - component: {fileID: 26395605}
   - component: {fileID: 26395604}
   - component: {fileID: 26395606}
-  - component: {fileID: 26395607}
   m_Layer: 0
   m_Name: Testo-Ken
   m_TagString: Player
@@ -263,7 +262,7 @@ Transform:
   m_GameObject: {fileID: 26395598}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.0000005, y: -2.09, z: 0}
+  m_LocalPosition: {x: -6.55, y: -1.94, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -369,19 +368,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 3, y: 3.67}
   m_Direction: 0
---- !u!114 &26395607
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 26395598}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d8371610809984d9a7a1fdb46668e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PublicEnergy: 1000
 --- !u!1 &204839684
 GameObject:
   m_ObjectHideFlags: 0
@@ -1030,6 +1016,7 @@ GameObject:
   - component: {fileID: 812074755}
   - component: {fileID: 812074756}
   - component: {fileID: 812074757}
+  - component: {fileID: 812074758}
   m_Layer: 0
   m_Name: Chun-Li
   m_TagString: Player
@@ -1105,7 +1092,7 @@ Transform:
   m_GameObject: {fileID: 812074747}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.26, y: -2.01, z: 0}
+  m_LocalPosition: {x: 7.73, y: -1.94, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1237,7 +1224,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 812074747}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fb22bebf5aab1d34d82f9d235b074986, type: 3}
   m_Name: 
@@ -1246,9 +1233,9 @@ MonoBehaviour:
   runSpeed: 0
   runSpeedMultiplier: 0
   jump: 0
-  jumpForce: 3.5
+  jumpForce: 10
   jumpTime: 0
-  jumpTimeMultiplier: 27
+  jumpTimeMultiplier: 1
   jumpMaxTime: 1
   groundLayer:
     serializedVersion: 2
@@ -1266,6 +1253,21 @@ MonoBehaviour:
   Shooting: 0
   bulletSpawnLocation: {fileID: 0}
   bulletLifeTime: 2
+--- !u!114 &812074758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 812074747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10e1c1588192a5c409a5f4e26a77c4dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  moveSpeed: 10
+  rb: {fileID: 812074755}
+  movement: {x: 0, y: 0}
 --- !u!1 &1142275010
 GameObject:
   m_ObjectHideFlags: 0
