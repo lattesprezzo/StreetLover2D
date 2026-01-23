@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;   
 
 public class PlayerTeleportControl : MonoBehaviour
 {
@@ -8,7 +9,8 @@ public class PlayerTeleportControl : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            TransportPlayer(other);
+            StartCoroutine(RespawnDelay(other)); // Laitetaan ajastin p‰‰lle
+            
 
         }
     }
@@ -29,5 +31,11 @@ public class PlayerTeleportControl : MonoBehaviour
             rb.linearVelocity = Vector2.zero;
     }
 
+    private IEnumerator RespawnDelay(Collider2D player) 
+    {
+        yield return new WaitForSeconds(2f);
+        TransportPlayer(player);
+        Debug.Log("Time is UP!");
+    }
 
 }
