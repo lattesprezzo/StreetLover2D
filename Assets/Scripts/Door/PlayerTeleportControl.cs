@@ -33,9 +33,11 @@ public class PlayerTeleportControl : MonoBehaviour
 
     private IEnumerator RespawnDelay(Collider2D player) 
     {
-        yield return new WaitForSeconds(2f);
-        TransportPlayer(player);
+        player.gameObject.SetActive(false);// piilotetaan pelaaja 
+        yield return new WaitForSeconds(2f); // odotetaan 2 sekuntia
+        TransportPlayer(player); // teleportataan pelaaja
         Debug.Log("Time is UP!");
+        player.gameObject.SetActive(true); // n‰ytet‰‰n pelaaja uudestaan
     }
 
 }
